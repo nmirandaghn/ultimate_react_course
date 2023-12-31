@@ -12,7 +12,11 @@ export default function App() {
   }
 
   function handleRemoveAllItems() {
-    setItems((items) => []);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all items?"
+    );
+
+    if (confirmed) setItems([]);
   }
 
   function handleToggleItem(id) {
@@ -123,7 +127,7 @@ function PackingList({ items, onRemoveItem, onToggleItem, onRemoveAllItems }) {
           <option value="description">Sort by description</option>
           <option value="status">Sort by packed status</option>
         </select>
-        <button onClick={() => onRemoveAllItems}>Clear list</button>
+        <button onClick={onRemoveAllItems}>Clear list</button>
       </div>
     </div>
   );
