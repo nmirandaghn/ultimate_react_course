@@ -7,6 +7,20 @@ const messages = [
 ];
 
 export default function App() {
+  return (
+    <div>
+      <Step />
+      <StepMessage step={1}>
+        Hi<span>👋</span>
+      </StepMessage>
+      <StepMessage step={2}>
+        Hello<span>😎</span>
+      </StepMessage>
+    </div>
+  );
+}
+
+function Step() {
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
 
@@ -36,9 +50,18 @@ export default function App() {
             <div className={step >= 3 ? "active" : ""}>3</div>
           </div>
 
-          <p className="message">
-            Step {step}: {messages[step - 1]}
-          </p>
+          <StepMessage step={step}>
+            {messages[step - 1]}
+            <div className="buttons">
+              <Button
+                bgColor="#7950f2"
+                textColor="#fff"
+                onClick={() => alert(`${messages[step - 1]}`)}
+              >
+                Learn how
+              </Button>
+            </div>
+          </StepMessage>
 
           <div className="buttons">
             <Button bgColor="#7950f2" textColor="#fff" onClick={handlePrevious}>
@@ -52,6 +75,15 @@ export default function App() {
         </div>
       )}
     </>
+  );
+}
+
+function StepMessage({ step, children }) {
+  return (
+    <div className="message">
+      <h3>Step {step}</h3>
+      {children}
+    </div>
   );
 }
 
