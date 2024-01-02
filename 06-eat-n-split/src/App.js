@@ -29,17 +29,23 @@ function Button({ children, onClick }) {
 }
 
 export default function App() {
+  const [friends, setFriends] = useState(initialFriends);
   const [showAddFriend, setshowAddFriend] = useState(false);
 
   function handleShowAddFriend() {
     setshowAddFriend((show) => !show);
   }
 
+  function handleAddFriend(friend) {
+    setFriends((friends) => [...friends, friend]);
+    setshowAddFriend(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {showAddFriend && <FormAddFriend />}
+        <FriendsList friends={friends} />
+        {showAddFriend && <FormAddFriend onAddFriends={handleAddFriend} />}
         <Button onClick={handleShowAddFriend}>
           {showAddFriend ? "Close" : "Add friend"}
         </Button>
@@ -49,10 +55,10 @@ export default function App() {
   );
 }
 
-function FriendsList() {
+function FriendsList({ friends }) {
   return (
     <ul>
-      {initialFriends.map((friend) => (
+      {friends.map((friend) => (
         <Friend friend={friend} key={friend.id}></Friend>
       ))}
     </ul>
@@ -74,19 +80,50 @@ function Friend({ friend }) {
           {friend.name} owes you ${friend.balance}
         </p>
       )}
-      {friend.balance === 0 && <p>Your and {friend.name} are even</p>}
+      {friend.balance === 0 && <p>You and {friend.name} are even</p>}
       <Button>Select</Button>
     </li>
   );
 }
 
-function FormAddFriend() {
+function FormAddFriend({ onAddFriends }) {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("https://i.pravatar.cc/48");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!name || !image) return;
+
+    const id = crypto.randomUUID();
+    const newFriend = {
+      id: crypto.randomUUID(),
+      name,
+      image: `${image}?=${id}`,
+      balance: 0,
+    };
+
+    onAddFriends(newFriend);
+
+    setName("");
+    setImage("https://i.pravatar.cc/48");
+  }
+
   return (
-    <form className="form-add-friend">
+    <form className="form-add-friend" onSubmit={handleSubmit}>
       <label>👪Friend name</label>
-      <input type="text"></input>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        autoFocus
+      />
       <label>🖼️Image URL</label>
-      <input></input>
+      <input
+        type="text"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
       <Button>Add</Button>
     </form>
   );
