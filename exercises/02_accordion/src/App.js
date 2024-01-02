@@ -21,6 +21,7 @@ export default function App() {
     <div>
       <Accordion data={faqs} />
       <AccordionX data={faqs} />
+      <AccordionX2 data={faqs} />
     </div>
   );
 }
@@ -94,6 +95,56 @@ function AccordionItemX({ num, title, text, selectItem, currentItem }) {
       >
         {text}
       </div>
+    </div>
+  );
+}
+
+function AccordionX2({ data }) {
+  const [currOpen, setCurrOpen] = useState(null);
+
+  return (
+    <div className="accordion">
+      {data.map((faq, index) => (
+        <AccordionItemX2
+          key={index}
+          num={index + 1}
+          title={faq.title}
+          currOpen={currOpen}
+          onOpen={setCurrOpen}
+        >
+          {faq.text}
+        </AccordionItemX2>
+      ))}
+      <AccordionItemX2
+        currOpen={currOpen}
+        onOpen={setCurrOpen}
+        title="Test 1"
+        num={22}
+        key="test 1"
+      >
+        <p>Allows React developers to:</p>
+        <ul>
+          <li>Break up UI into components</li>
+          <li>Make components reusuable</li>
+          <li>Place state efficiently</li>
+        </ul>
+      </AccordionItemX2>
+    </div>
+  );
+}
+
+function AccordionItemX2({ num, title, currOpen, onOpen, children }) {
+  const isOpen = num === currOpen;
+
+  return (
+    <div
+      onClick={() => onOpen(isOpen ? null : num)}
+      className={`item ${isOpen ? "open" : ""}`}
+    >
+      <p className="number">{num < 9 ? `0${num}` : num}</p>
+      <p className="title">{title}</p>
+      <p className="icon">{isOpen ? "-" : "+"}</p>
+      {isOpen && <div className="content-box">{children}</div>}
     </div>
   );
 }
