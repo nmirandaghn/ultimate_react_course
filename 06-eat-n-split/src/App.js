@@ -49,6 +49,10 @@ export default function App() {
     setshowAddFriend(false);
   }
 
+  function handleUpdateFriends(friends) {
+    setFriends((data) => friends);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -62,7 +66,13 @@ export default function App() {
           {showAddFriend ? "Close" : "Add friend"}
         </Button>
       </div>
-      {selectedFriend && <FormSplitBill friend={selectedFriend} />}
+      {selectedFriend && (
+        <FormSplitBill
+          friend={selectedFriend}
+          friends={friends}
+          onUpdateFriends={handleUpdateFriends}
+        />
+      )}
     </div>
   );
 }
@@ -101,12 +111,6 @@ function Friend({ friend, selectedFriend, onSelectedFriend }) {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
       {
-        /* {!isSelected && (
-        <Button onClick={() => onSelectedFriend(friend)}>Select</Button>
-      )}
-      {isSelected && (
-        <Button onClick={() => onSelectedFriend(null)}>Close</Button>
-      )} */
         <Button onClick={() => onSelectedFriend(friend)}>
           {isSelected ? "Close" : "Select"}
         </Button>
@@ -158,18 +162,50 @@ function FormAddFriend({ onAddFriends }) {
   );
 }
 
-function FormSplitBill({ friend }) {
+function FormSplitBill({ friend, friends, onUpdateFriends }) {
+  const [bill, setBill] = useState(0);
+  const [expense, setExpense] = useState(0);
+  const [whoIsPaying, setWhoIsPaying] = useState("user");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const tempFriends = friends.map((f) =>
+      f.id === friend.id ? { ...f, balance: bill - expense } : f
+    );
+
+    onUpdateFriends(tempFriends);
+  }
+
   return (
-    <form className="form-split-bill">
+    <form className="form-split-bill" onSubmit={handleSubmit}>
       <h2>Split a bill with {friend.name}</h2>
       <label>💰Bill value</label>
-      <input type="text" autoFocus></input>
+      <input
+        type="text"
+        value={bill}
+        onChange={(e) => {
+          setBill(Number(e.target.value));
+        }}
+        autoFocus
+      ></input>
       <label>🙍Your expense</label>
-      <input type="text"></input>
+      <input
+        type="text"
+        value={expense}
+        onChange={(e) => {
+          setExpense(
+            Number(e.target.value) > bill ? expense : Number(e.target.value)
+          );
+        }}
+      ></input>
       <label>👯{friend.name}'s expenses</label>
-      <input type="text" disabled></input>
+      <input type="text" value={bill - expense} disabled></input>
       <label>🤑Who's paying the bill?</label>
-      <select>
+      <select
+        value={whoIsPaying}
+        onChange={(e) => setWhoIsPaying(e.target.value)}
+      >
         <option value="user">You</option>
         <option value="friend">X</option>
       </select>
