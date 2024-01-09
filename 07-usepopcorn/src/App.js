@@ -130,6 +130,7 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
       fetchMovies();
 
       return function () {
@@ -373,11 +374,25 @@ function MovieDetails({
 
       return function () {
         document.title = "usePopcorn";
-        console.log("Clean up effect for movie" + title);
       };
     },
     [title]
   );
+
+  useEffect(
+    function (){
+      function callback(e) {
+        if(e.code === "Escape") {
+            onCloseMovie();
+        };  
+      }
+
+      document.addEventListener("keydown", callback);
+
+      return function() {
+        document.removeEventListener("keydown", callback);
+      }
+  }, [onCloseMovie]);
 
   return (
     <div className="details">
