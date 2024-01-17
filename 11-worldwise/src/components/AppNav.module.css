@@ -1,0 +1,9 @@
+.nav {
+  background-color: rebeccapurple;
+}
+
+.nav ul {
+  list-style-type: noce;
+  display: flex;
+  justify-content: space-between;
+}
