@@ -37,30 +37,6 @@
       "id": "98443197"
     },
     {
-      "id": "94b0",
-      "cityName": "Cinfaes",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2024-01-29T00:07:56.438Z",
-      "notes": "test",
-      "position": {
-        "lat": "41.02964338716641",
-        "lng": "-7.998046875000001"
-      }
-    },
-    {
-      "id": "df1f",
-      "cityName": "Beaulon",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "date": "2024-01-29T00:13:43.064Z",
-      "notes": "test",
-      "position": {
-        "lat": "46.58906908309185",
-        "lng": "3.7353515625000004"
-      }
-    },
-    {
       "id": "7f30",
       "cityName": "Tegucigalpa",
       "country": "Honduras",
@@ -70,18 +46,6 @@
       "position": {
         "lat": "14.26438308756265",
         "lng": "-87.18750000000001"
-      }
-    },
-    {
-      "id": "25ca",
-      "cityName": "Jinotega",
-      "country": "Nicaragua",
-      "emoji": "🇳🇮",
-      "date": "2024-01-29T00:21:33.467Z",
-      "notes": "",
-      "position": {
-        "lat": "13.111580118251661",
-        "lng": "-85.91308593750001"
       }
     }
   ]
