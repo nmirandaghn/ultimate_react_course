@@ -1,8 +1,4 @@
-import { useQuizzes } from "./QuizContext";
-
-function NextButton() {
-  const { dispatch, answer, index, numQuestions } = useQuizzes();
-
+function NextButton({ dispatch, answer, index, numQuestions }) {
   if (answer === null) return null;
 
   if (index < numQuestions - 1)
