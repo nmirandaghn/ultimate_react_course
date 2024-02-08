@@ -1,6 +1,6 @@
-import CreateCustomer from "./CreateCustomer";
-import Customer from "./Customer";
-import AccountOperations from "./AccountOperations";
+import CreateCustomer from "./features/customers/CreateCustomer";
+import Customer from "./features/customers/Customer";
+import AccountOperations from "./features/accounts/AccountOperations";
 import BalanceDisplay from "./BalanceDisplay";
 
 function App() {
