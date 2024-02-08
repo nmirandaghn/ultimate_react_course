@@ -10,16 +10,14 @@ function AccountOperations() {
   const [currency, setCurrency] = useState("USD");
 
   const dispatch = useDispatch();
-  const {
-    loan: currentLoan,
-    loanPurpose: currentLoanPurpose,
-    balance,
-  } = useSelector((store) => store.account);
+  const { loan: currentLoan, loanPurpose: currentLoanPurpose } = useSelector(
+    (store) => store.account
+  );
 
   function handleDeposit() {
     if (!depositAmount) return;
-    setDepositAmount("");
     dispatch(deposit(depositAmount));
+    setDepositAmount("");
   }
 
   function handleWithdrawal() {
