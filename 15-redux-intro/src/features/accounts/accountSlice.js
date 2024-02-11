@@ -44,7 +44,7 @@ export function deposit(amount, currency) {
     dispatch({ type: "account/convertingCurrency" });
     // API call
     const res = await fetch(
-      `https://api.frakfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
     );
 
     const data = await res.json();
